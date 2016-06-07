@@ -5,6 +5,9 @@ module.exports = function(state=0, action){
 	switch (type){
 		case (consts.FOOD_EATED):
 			return (state + 1)
+
+		case (consts.RESET_GAME):
+			return 0;
 	}
 	return state;
 } 

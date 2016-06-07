@@ -6,15 +6,15 @@ var consts = require('../consts.js');
 var bindActionCreators = Redux.bindActionCreators
 
 var movment = require('../actions/movment.js')
+var updateScore = require('../actions/updatescore.js')
+
 
 var Row = require('../components/Row.js')
 
 var Board = React.createClass({
 	getInitialState: function() {
 		return {
-			direction: 'up',
-			coords : this.props.snakePosition
-
+			direction: !this.props.activeSnake ? 'nodirection':'up',
 		};
 	},
 	render: function() {
@@ -37,40 +37,53 @@ var Board = React.createClass({
 			display : 'flex',
 		}
 	},
+/*	componentWillReceiveProps:function(nextProps) {
+	
+				
+	},
+	shouldComponentUpdate: function(nextProps, nextState) {
+		
+	},*/
 	componentWillMount: function() {
+		if(!this.props.activeSnake) {
+			return
+		}
+
 		window.addEventListener('keydown', this.keyPressed)
 		this.interval = setInterval(()=>{
-			this.props.movment({direction: this.state.direction, coords:this.state.coords})
-			if(this.toUpdateScore(this.state.coords)) {}
+			if(this.props.activeSnake)this.props.movment({direction: this.state.direction, coords:this.props.snakePosition})
+			if(this.toUpdateScore(this.props.snakePosition)) {
+				this.props.updateScore()
+			}
 		}, 100)
 	},
 	componentWillUnmount: function() {
+		//if(!this.props.activeSnake) return;
 		clearInterval(this.interval)
 	},
 	keyPressed : function(event){
-		this.setState({direction : event.keyIdentifier.toLowerCase()})
-		this.componentWillMount()
+		if(!this.props.activeSnake) return;
+		this.setState({direction : event.keyIdentifier.toLowerCase()});
 	},
 	toUpdateScore: function(position){
 		const x = position.x;
-		const y = position.y
-		var toreturn = (this.props.boardState[y][x].color == consts.FOOD_COLOR)
+		const y = position.y;
+		var toreturn = (this.props.boardState[y][x].type == 'food')
 
-		if(toreturn){console.log(toreturn, this.props.boardState[y][x].color, this.props.boardState[x])}
-		this.componentWillUnmount()
 		return toreturn
 	}
 
 });
 
 function mapActionToProps(dispatch){
-	return bindActionCreators({movment}, dispatch)
+	return bindActionCreators({movment, updateScore}, dispatch);
 }
 
 function mapStateToProps(state){
 	return {
 		boardState: state.boardState,
 		snakePosition : state.snakePosition,
+		activeSnake : state.activeSnake
 	}
 }
 
