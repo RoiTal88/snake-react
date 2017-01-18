@@ -63,7 +63,23 @@ var Board = React.createClass({
 	},
 	keyPressed : function(event){
 		if(!this.props.activeSnake) return;
-		this.setState({direction : event.keyIdentifier.toLowerCase()});
+		var direction = event.keyCode;
+		switch (direction){
+			case 37:
+				direction = 'left'
+			break;
+			case 38:
+				direction = 'up'
+			break;
+			case 39:
+				direction = 'right'
+			break;
+			case 40:
+				direction = 'down'
+			break;
+		}
+
+		this.setState({direction});
 	},
 	toUpdateScore: function(position){
 		const x = position.x;

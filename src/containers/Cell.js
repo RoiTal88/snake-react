@@ -1,8 +1,11 @@
 var React = require('react');
 
 var Cell = React.createClass({
-
+	shouldComponentUpdate: function(nextProps, nextState) {
+	 	return nextProps.cellInfo.color != this.props.cellInfo.color;
+	},
 	render: function() {
+		console.log('render')
 		return (
 			<div style={this.getStyle()} />
 		);

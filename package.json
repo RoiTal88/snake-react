@@ -5,9 +5,9 @@
   "main": "index.js",
   "repository": "",
   "scripts": {
-    "start": "webpack-dev-server --hot",
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "test:watch": "npm run test -- --watch"
+    "dev": "webpack-dev-server --hot",
+    "postinstall" : "webpack -p",
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
@@ -32,6 +32,13 @@
     "react-dom": "^0.14.3",
     "react-redux": "^4.4.5",
     "react-router": "^2.0.1",
-    "redux": "^3.0.4"
+    "redux": "^3.0.4",
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "jade": "~1.11.0",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0"
   }
 }
