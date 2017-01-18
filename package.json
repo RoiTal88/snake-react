@@ -6,7 +6,6 @@
   "repository": "",
   "scripts": {
     "dev": "webpack-dev-server --hot",
-    "postinstall" : "webpack -p",
     "start": "node app.js"
   },
   "author": "",
